@@ -131,5 +131,5 @@ func start
 
 #### Link to Storage Queue docs
 
-[](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-queue-output?tabs=python-v2%2Cisolated-process%2Cextensionv5&pivots=programming-language-csharp#example)
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-queue-output?tabs=python-v2%2Cisolated-process%2Cextensionv5&pivots=programming-language-csharp#example
 
