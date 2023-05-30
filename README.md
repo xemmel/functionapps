@@ -51,3 +51,49 @@ portal.azure.com
 
 entra.microsoft.com
 
+
+
+### Create Function Apps
+
+#### In-process
+
+```powershell
+
+func init [name] --worker-runtime dotnet
+
+```
+
+
+#### Isolated
+
+```powershell
+
+func init [name] --worker-runtime dotnetIsolated --target-framework net7.0
+
+```
+
+#### If nuget.org not registered
+
+```powershell
+
+dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+
+```
+
+#### Create new HttpTrigger (In project folder)
+
+```
+
+func new -t HttpTrigger -n [name]
+
+```
+
+#### Create new QueueTrigger (In project folder)
+
+```
+
+func new -t QueueTrigger -n [name]
+
+```
+
+
