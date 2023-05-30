@@ -33,3 +33,21 @@ choco install git -y
 choco install dotnet-sdk -y
 
 ```
+
+
+### Logon to Azure (xx = 01,02...) (number given by instructor)
+
+UserName: studentfunction05023xx@integration-it.com
+Password: [given by instructor]
+
+Do NOT set up MFA (Skip for now, etc.)
+
+
+### Azure (Portal)
+
+portal.azure.com
+
+### Azure AD 
+
+entra.microsoft.com
+
