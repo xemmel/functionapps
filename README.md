@@ -96,6 +96,31 @@ func new -t QueueTrigger -n [name]
 
 ```
 
+
+#### Queue trigger code
+
+```csharp
+
+        [Function("MyQueueTrigger")]
+        public async Task Run([QueueTrigger("invoicequeue", Connection = "theconnection")] string myQueueItem)
+        {
+            _logger.LogInformation($"C# Queue trigger function processed: {myQueueItem}");
+        }
+
+```
+
+#### Queue trigger local.settings.json
+
+Find your storage connection string under *Keys*
+
+```json
+
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+        "theconnection" : "....."
+    }
+
+```
+
 #### Start the function app locally
 
 ```powershell
