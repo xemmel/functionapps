@@ -96,4 +96,10 @@ func new -t QueueTrigger -n [name]
 
 ```
 
+#### Start the function app locally
 
+```powershell
+
+func start
+
+```
