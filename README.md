@@ -133,3 +133,17 @@ func start
 
 https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-queue-output?tabs=python-v2%2Cisolated-process%2Cextensionv5&pivots=programming-language-csharp#example
 
+
+
+
+
+
+##### Deploy Function App from CLI
+
+Create new Function App (.NET 7 Isolated)
+
+```powershell
+
+func azure functionapp publish [name of function app]
+
+```
