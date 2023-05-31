@@ -16,12 +16,14 @@
         [Function(nameof(StarterAsync))]
         public async Task<HttpResponseData> StarterAsync(
         [HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req,
-        [DurableClient] DurableClientContext durableContext)
+        [DurableClient] DurableTaskClient client)
         {
-            string instanceId = await durableContext.Client.ScheduleNewOrchestrationInstanceAsync(nameof(HelloCitiesOrchestrator));
-            _logger.LogInformation("Created new orchestration with instance ID = {instanceId}", instanceId);
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            return durableContext.CreateCheckStatusResponse(req, instanceId);
+            var instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(HelloCitiesOrchestrator));
+
+            var response = client.CreateCheckStatusResponse(req,instanceId);
+            return response;
         }
         [Function(nameof(HelloCitiesOrchestrator))]
         public async Task<string> HelloCitiesOrchestrator([OrchestrationTrigger] TaskOrchestrationContext context)
