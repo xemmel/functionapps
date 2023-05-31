@@ -215,6 +215,8 @@ $response;
 
 - vs code
 
+- .csproj replace nugets with **Final**
+
 - local.settings.json
    AzureWebJobsStorage = [connection string]
 
