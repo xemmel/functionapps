@@ -1,0 +1,474 @@
+Managed Identities
+
+
+System                              User
+(User) 1-1 Resource                 Azure Resource
+                                    M-n
+"MS Recommended"
+@Microsoft.KeyVault -> Hokus 
+Only works on System!               Up front    IaC
+
+
+DURABLE
+
+
+Trigger (Normal Trigger) -> Http Trigger *
+
+Orchestrator (Tasks)
+
+Activity (task/jobs)
+
+
+
+Sequential
+
+
+await A
+await B
+await C
+
+
+AZURE:
+
+
+
+AAD (Microsoft cloud Identity Provider)
+
+
+
+
+(security/auth/rbac/policies) Management Groups 
+MG
+  MG
+    Sub
+    MG
+      Sub
+
+ Azure Subscription = Invoice    (trusted AAD (tenant))
+(security/auth/rbac/policies)  Resource Groups (Region/Location)
+ (security/auth/rbac/policies)    Resource ($$$) (Region/Location) -> Compute, network, Storage, AI/ML
+   (security/auth/rbac)  SubResource
+
+
+Region -> Availabitity Zones
+
+
+Region Pairs
+
+R1 <-> R2
+
+
+
+ Resource 
+     -> Metrics (90 days)
+     -> Audit log (Activity Log -> Management plane) -> 30 days
+ 
+     -> Application Log (Application  -> STDOUT)    -> :-(   !!!!
+
+
+
+
+
+Custom Log
+   Diagnostic Settings
+      Metrics/application/audit
+           Target
+               -> Log Analytics Workspace ($$$$$$) -> Alert, Query (kusto queries) -> New Features
+               -> Storage Account ($) Unstructured (AUDIT)
+               -> Event Hub    -> Function app -> LAW
+
+
+
+Web App (Functions App)
+     Application Insight
+
+
+
+               (CONTRIBUTER, OWNER)
+              MANAGEMENT
+
+
+              DATA
+
+
+KeyVault
+    password
+
+
+Function App
+
+1) :-(
+  Service Account (AAD) -> Service Principal
+           UserName/Password -> Function App
+
+KeyVault SDK
+   var credentials = new DefaultCre();
+
+vaultClient.GetKey(cre,"password");
+
+
+2) :-\
+   Function App MI
+   var credentials = new DefaultCre();
+
+vaultClient.GetKey(cre,"password");
+
+
+3) :-)
+Function App MI
+
+
+Configuration.GetEnvVar("password");
+
+Create new Function App (new RG)
+Create new Key Vault -> NEXT
+    -> Yourself (Key Vault Admin)
+
+Function App
+     Function Http
+          
+
+
+@Microsoft.KeyVault(VaultName=superusers2;SecretName=secretftp)
+
+
+
+
+
+
+
+
+
+
+Logic App (x) -> Storage Account (BLOB)
+(MI)                RBAC (x, blob read)
+
+
+
+
+2010  Azure
+
+RBAC (Role Assignment)   (Management plane)
+
+(Data plane) -> Db (Keys/Password)
+
+
+
+
+2013 (Key Vault)
+         (Management)
+         (Data) 
+
+"Key Vault RBAC" -> "Access Control"
+
+
+
+2015 (Data Plane RBAC)
+
+"Rigtig" RBAC vs. "Access Control"
+
+
+
+Logic App : SuperUserWorkflow
+
+
+Keys/Password :-(     (Rotate)
+
+Passwordless: 
+       Consumer of data is AAD Authencates
+
+
+
+
+Resource -> Resource (KEYS!!!)
+
+
+
+
+
+Transient
+Scoped (DEFAULT!!!)
+Singleton
+
+
+
+
+
+
+Resource Group
+    Resource X
+    Resource Y
+
+
+Resource Group
+   Resource Z
+
+
+
+Function App (Get message from SA queue???)
+
+Storage Account
+
+
+
+Function App = project .csproj
+Function = class .cs
+
+
+IN-Process vs Isolated
+
+
+Create new Resource Group (rg-su-[init]-functions)
+
+Create new Function App (existing RG)
+ -> NEXT
+
+
+Function App
+    -> Functions
+       -> New Function (Http Trigger) -> Scroll down -> Set name
+       -> Code and Test
+            -> Get Function URL -> Copy
+
+Postman
+   GET -> Clipboard
+
+
+
+
+
+
+
+------
+
+
+Create Storage Account -> (existing RG)
+   -> unique name
+   -> NEXT GRS!!!
+       -> Storage account
+
+Storage Account 
+   Queues -> new queue (orderqueue)
+
+Notepad: name of storage account, name of queue
+
+Function App
+   Functions -> New Function
+      Azure Queue Storage Trigger
+          Scroll
+           Name
+           Name of queue (notepad)
+          Connection : new drop down -> find your storage account
+           Save/OK
+
+Storage Account -> Queue -> New message submit
+   < 30 sec. the message disappears
+
+
+
+
+Create new Resource Group (rg-su-[init]-functions)
+
+Create new Function App (existing RG)
+ -> NEXT
+
+
+Function App
+    -> Functions
+       -> New Function (Http Trigger) -> Scroll down -> Set name
+       -> Code and Test
+            -> Get Function URL -> Copy
+
+Postman
+   GET -> Clipboard
+
+
+
+
+
+
+
+------
+
+
+Create Storage Account -> (existing RG)
+   -> unique name
+   -> NEXT GRS!!!
+       -> Storage account
+
+Storage Account 
+   Queues -> new queue (orderqueue)
+
+Notepad: name of storage account, name of queue
+
+Function App
+   Functions -> New Function
+      Azure Queue Storage Trigger
+          Scroll
+           Name
+           Name of queue (notepad)
+          Connection : new drop down -> find your storage account
+           Save/OK
+
+Storage Account -> Queue -> New message submit
+   < 30 sec. the message disappears
+
+
+
+https://superusers.blob.core.windows.net/thefirstcontainer/TestFile.txt
+
+
+
+
+
+
+
+Azure Function App = Azure Web App / App Service
+
+
+Azure App Service SKAL HAVE en App Service Plan
+
+
+App Service Plan -> VM (Cpu/RAM -> $/md) (semi-auto-scaling)
+
+
+
+Function App
+      Function -> HTTP Trigger (API)
+      Timer -> Schedule
+      Resource Specific Triggers (Blob, Queue, Db) 
+
+ OUTPUT
+
+
+Serverless
+ 
+
+Serverless    vs  App Service Plan
+
+Pay as you go       "Fixed Price"
+Autoscale           manuel-scaling
+NO VNET (In- out)   VNET
+Cold starts         No Cold starts
+Timeouts            
+
+
+
+Queue Trigger -> Mg -> Call ERP (HTTP)
+HTTP Trigger -> Latency -> Private Endpoints (Service Plan)
+
+
+
+Function app = Web app
+    App Service Plan (* serverless Y)
+    Storage Account (system)
+    Application Insight
+      Log Analytics Workspaces
+
+
+Function App (Function Container)
+    Function (Http Trigger)
+    Function (Timer Trigger)
+
+
+
+
+Blob
+
+Hot    read $  storage $$$
+Cool   read $$ storage $$
+
+(Cold) read $$$ storage $
+Storage :-(   storage ($)
+
+
+
+
+Azure Resource
+
+    Management (CRUD)
+  (password, password-less(AAD Authentication))  (Data/App) (Databaser, WebApps)
+
+
+
+
+
+
+
+Naming in Azure!!!
+
+RG (Unique)
+
+SubId/NameRg
+
+
+Resource (Unique)
+
+SubId/NameRg/Type/Name
+
+
+1/1/VM/vm1
+1/1/Disk/vm1
+
+2/1/VM/vm1
+
+
+Morten (AAD)
+
+
+Resource Group X (Morten skal kunne læse blobs) 
+    Storage Account X
+    Storage Account Y
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
