@@ -9,7 +9,7 @@
 
 #### Create a normal HttpTrigger
 
-##### Replace
+##### Basic Durable Http Template
 
 ```csharp
 
@@ -203,3 +203,33 @@ $response;
 
 
 ```
+
+
+
+### Task
+
+- Create new Storage Account (system storage account)
+   - Access Keys > Connection String
+
+- func init [funcname] --worker-runtime dotnetIsolated --target-framework net7.0
+
+- vs code
+
+- local.settings.json
+   AzureWebJobsStorage = [connection string]
+
+- func new -t HttpTrigger -n MyDurableHttpTrigger
+
+- In function.cs replace [Function] with **Basic Durable Http Template**
+
+- func start
+
+- Postman: Call/get
+
+- examine output (statusQueryGetUri)
+
+- Postman: Call statuQueryUri!
+
+    - Running
+    - 45 sek
+    - Completed. Output .....
